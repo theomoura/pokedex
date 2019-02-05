@@ -1,12 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
+
 import './index.css';
+import 'dotenv/config';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const client = new ApolloClient({
+  link: new HttpLink({ uri: 'https://graphql-pokemon.now.sh/' }),
+  request: operation => {
+    operation.setContext({
+      headers: {
+        authorization: `Bearer ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`,
+      },
+    });
+  },
+  fetchOptions: {
+    mode: 'no-cors'
+  },
+  cache: new InMemoryCache()
+});
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// const client = new ApolloClient({
+//   link: new HttpLink({ uri: 'https://mpjk0plp9.lp.gql.zone/graphql' }),
+//   fetchOptions: {
+//     mode: 'no-cors'
+//   },
+//   cache: new InMemoryCache()
+// });
+
+const AppWithProvider = () => (
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>
+);
+
+ReactDOM.render(<AppWithProvider />, document.getElementById('root'));
