@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './index.css';
 import 'dotenv/config';
-import App from './App';
+import App from './components/Pokedex';
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: 'https://graphql-pokemon.now.sh/' }),
