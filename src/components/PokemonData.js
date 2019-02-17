@@ -4,20 +4,26 @@ import PropTypes from 'prop-types';
 
 import { pokemonNameSearch } from '../queries/searchPokemonName'
 import PokemonEvolutions from './PokemonEvolutions'
+import useTitle from '../hooks/useTitle'
 
 const Search = ({ data: { pokemon, error, loading } }) => {
 
   if (error || !pokemon) {
+    useTitle(false)
     return null
   }
+
   if (loading) return 'PokeLoading'
+
+  useTitle(true, pokemon.name)
+
 
   return (
     <div className="d-flex justify-content-center">
       <div className="card">
         <div className="p-3">
 
-          <img className="image-container" src={pokemon.image} />
+          <img className="image-container" alt="pokemon" src={pokemon.image} />
         </div>
         <div className="card-body">
           <h4 className="card-title pb-5">Pokemon: {pokemon.number} - {pokemon.name}</h4>
@@ -25,7 +31,7 @@ const Search = ({ data: { pokemon, error, loading } }) => {
             <h6 className="pr-3">Type:</h6>
             {pokemon.types.map(type => (
               <div className="type-item" key={type}>
-                <span class="badge badge-info">{type}</span>
+                <span className="badge badge-info">{type}</span>
               </div>
             ))}
           </div>
@@ -33,7 +39,7 @@ const Search = ({ data: { pokemon, error, loading } }) => {
             <h6 className="pr-3">Resistances:</h6>
             {pokemon.resistant.map(resistance => (
               <div className="resistant-item" key={resistance}>
-                <span class="badge badge-success">{resistance}</span>
+                <span className="badge badge-success">{resistance}</span>
               </div>
             ))}
           </div>
@@ -41,7 +47,7 @@ const Search = ({ data: { pokemon, error, loading } }) => {
             <h6 className="pr-3">Weakness:</h6>
             {pokemon.weaknesses.map(weak => (
               <div className="weak-item" key={weak}>
-                <span class="badge badge-danger">{weak}</span>
+                <span className="badge badge-danger">{weak}</span>
               </div>
             ))}
           </div>

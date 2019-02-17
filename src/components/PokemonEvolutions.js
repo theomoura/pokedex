@@ -11,10 +11,10 @@ const PokemonEvolutions = ({ evolutions }) => {
       <h5>Evolutions</h5>
       <div>
         {evolutions.map(evolution => (
-          <div className="evolution-item" key={evolution}>
-            <ul class="list-group">
-              <li class="list-group-item d-flex align-items-center">
-                <img className="evolution-image" src={evolution.image} />
+          <div className="evolution-item" key={evolution.name}>
+            <ul className="list-group">
+              <li className="list-group-item d-flex align-items-center">
+                <img className="evolution-image" alt="evolution" src={evolution.image} />
                 <span className="pl-3">{evolution.name}</span>
               </li>
             </ul>
