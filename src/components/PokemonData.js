@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
+import { compose } from 'ramda'
 
 import { pokemonNameSearch } from '../queries/searchPokemonName'
 import PokemonEvolutions from './PokemonEvolutions'
@@ -13,10 +14,7 @@ const Search = ({ data: { pokemon, error, loading } }) => {
     return null
   }
 
-  if (loading) return 'PokeLoading'
-
   useTitle(true, pokemon.name)
-
 
   return (
     <div className="d-flex justify-content-center">
@@ -71,4 +69,4 @@ const options = {
   }),
 }
 
-export default graphql(pokemonNameSearch, { options })(Search);
+export default compose(memo, graphql(pokemonNameSearch, { options }))(Search);

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, lazy, Suspense } from 'react'
 
 import logo from '../resources/logo.png'
-import Search from './PokemonData'
 import '../global.css'
+
+const Search = lazy(() => import('./PokemonData'))
 
 const App = () => {
 
@@ -38,7 +39,9 @@ const App = () => {
           </div>
         </div>
       </div>
-      <Search pokemon={search} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Search pokemon={search} />
+      </Suspense>
     </div>
   )
 }
